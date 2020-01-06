@@ -19,6 +19,11 @@ namespace Asteroid_Belt_Assault
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        enum GameStates { TitleScreen, Playing, PlayerDead, GameOver }
+        GameStates gameState = GameStates.TitleScreen;
+        Texture2D titleScreen;
+        Texture2D spriteSheet;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -48,6 +53,8 @@ namespace Asteroid_Belt_Assault
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            titleScreen = Content.Load<Texture2D>(@"Textures/TitleScreen");
+            spriteSheet = Content.Load<Texture2D>(@"Textures/SpriteSheet");
         }
 
         /// <summary>
@@ -71,6 +78,17 @@ namespace Asteroid_Belt_Assault
                 this.Exit();
 
             // TODO: Add your update logic here
+            switch(gameState)
+            {
+                case GameStates.TitleScreen:
+                    break;
+                case GameStates.Playing:
+                    break;
+                case GameStates.PlayerDead:
+                    break;
+                case GameStates.GameOver:
+                    break;
+            }
 
             base.Update(gameTime);
         }
@@ -84,7 +102,26 @@ namespace Asteroid_Belt_Assault
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
 
+            switch(gameState)
+            {
+                case GameStates.TitleScreen:
+                    spriteBatch.Draw(titleScreen, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+                    break;
+                case GameStates.Playing:
+                case GameStates.PlayerDead:
+                case GameStates.GameOver:
+
+                    break;
+            }
+
+            if (gameState == GameStates.GameOver)
+            {
+
+            }
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
