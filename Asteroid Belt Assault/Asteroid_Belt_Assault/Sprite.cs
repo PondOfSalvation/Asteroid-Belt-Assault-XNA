@@ -80,5 +80,29 @@ namespace Asteroid_Belt_Assault
             frameWidth = initialFrame.Width;
             frameHeight = initialFrame.Height;
         }
+
+        public void AddFrame(Rectangle frameRectangle)
+        {
+            frames.Add(frameRectangle);
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            timeForCurrentFrame += elapsed;
+
+            if (timeForCurrentFrame >= frameTime)
+            {
+                currentFrame = (currentFrame + 1) % frames.Count;
+                timeForCurrentFrame = 0f;
+            }
+
+            Location += Velocity * elapsed;
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, Center, Source, TintColor, rotation, new Vector2((float)frameWidth / 2, (float)frameHeight / 2), 1f, SpriteEffects.None, 0f);
+        }
     }
 }
